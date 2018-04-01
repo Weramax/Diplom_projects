@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title_block %}
+ 	{{ species_projects.name }}
+{% endblock %}
+
+{% block content%}
+	{% for itm in project %}
+	<div>
+	<h1>{{ itm.name}}</h1>
+	<br>
+		<div>
+			{{ itm.description }}
+			<br>
+			{{ itm.species_task }}
+		</div>
+	</div>
+{% endfor %}
+{% endblock %}

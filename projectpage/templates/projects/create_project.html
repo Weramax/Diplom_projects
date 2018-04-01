@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title_block %}
+	Создание проекта
+{% endblock %}
+
+{% block content %}
+
+	<form action="/project/createproject" method="POST">
+		{% csrf_token %}
+		<div class="form-group">
+			<label>Name</label>
+			<input required="True" type="text" class="form-control" name="name">
+			<br>
+			<label>Description</label>
+			<input required="True" type="text" class="form-control" name="description">
+			<br>
+			<input type="submit" class="btn btn-default" value="Send">
+		</div>
+	</form>
+{% endblock %}

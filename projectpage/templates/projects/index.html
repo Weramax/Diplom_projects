@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title_block %}
+	Project Main Page
+{% endblock %}
+
+{% block content %}
+<a href="project/createproject">CREATE PRoJECT</a>
+	<h1>Hello {{ mainuser }}</h1>
+	<div class="container">
+	{% for itm in species_projects%}
+	
+		<a href="project/{{ itm.id }}">
+			<h2>{{ itm.name }}</h2>
+		</a>
+		<span>{{ itm.description }}</span>	
+		{% endfor %}
+	</div>
+{% endblock %}
