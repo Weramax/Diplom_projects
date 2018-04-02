@@ -6,5 +6,5 @@ urlpatterns = [
 	url(r'^$', main),
 	url(r'^project/(?P<pk>\d+)$', details),
 	url(r'^project/createproject$', create_project),
-	url(r'^project/create_project_task$', create_project_task)
+	url(r'^(?P<pk>\d+)/create_project_task$', create_project_task)
 ]

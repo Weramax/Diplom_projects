@@ -24,7 +24,7 @@ def create_project(request):
 
 	return render(request, 'projects/create_project.html')
 
-def create_project_task(request):
+def create_project_task(request, pk):
 	task_species = Species_Task.objects.all()
 
 
@@ -32,7 +32,8 @@ def create_project_task(request):
 		name = request.POST.get('name')
 		description = request.POST.get('description')
 		species_task = request.POST.get('species_task')
-		Project.objects.get_or_create(name = name, species_id=6, description=description)
+
+		Project.objects.get_or_create(name = name, species_id=pk, species_task_id=species_task, description=description)
 		return redirect('/')
 
 	return render(request, 'projects/create_project_task.html', {'task_species': task_species})

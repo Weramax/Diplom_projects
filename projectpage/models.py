@@ -1,6 +1,7 @@
 from django.db import models
 
 
+
 class Species_Task(models.Model):
 	name = models.CharField(max_length = 250)
 	description = models.TextField()
@@ -24,9 +25,12 @@ class Project(models.Model):
 
     species_task = models.ForeignKey('Species_Task', on_delete = models.CASCADE)
 
+    created_task = models.DateField(verbose_name='Дата создания',auto_now_add=True)
+
     description = models.TextField()
 
     def __str__(self):
     	return self.name
+
 
    

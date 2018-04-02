@@ -6,7 +6,7 @@
 
 {% block content %}
 
-		<form action="project/create_project_task method="POST">
+		<form action="" method="POST">
 		{% csrf_token %}
 		<div class="form-group">
 			<label>Name</label>
@@ -16,8 +16,8 @@
 			<input required="True" type="text" class="form-control" name="description">
 			<br>
 			<label>Вид задачи</label>
-			<select>{% for itm in task_species %}
-				<option value="{{ itm }}">
+			<select name="species_task">{% for itm in task_species %}
+				<option value={{ itm.id }}>
 					{{ itm.name }}
 				</option>
 				{% endfor %}
