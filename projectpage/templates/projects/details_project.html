@@ -5,16 +5,38 @@
 {% endblock %}
 
 {% block content%}
-<a href="/{{ species_projects.id }}/create_project_task">suda</a>
-	{% for itm in project %}
-	<div>
-	<h1>{{ itm.name}}</h1>
-	<br>
-		<div>
-			{{ itm.description }}
-			<br>
-			{{ itm.species_task }}
+
+<div class="container">
+<a href="/{{ species_projects.id }}/create_project_task" class="btn btn-primary">Создать задачу</a>
+<br>
+		<span>Описание: 
+		{{ species_projects.description }}
+		</span>
+		<div class="d-flex flex-row">
+			
+				{% for itm in project %}
+				<div class="p-2">
+					<div class="card">
+					<div class="card-header">
+					<h3 class="card-title">{{ itm.name}}</h3>
+					</div>
+					
+					<div card-body>
+						<span class="card-text">
+							{{ itm.description }}
+						</span>
+						<br>
+						<span class="card-text">
+							Тип задачи: {{ itm.species_task }}
+						</span>
+						<br><span class="card-text">Дата окончание задачи:
+						{{ itm.finish_task }} </span>
+					</div>
+				</div>
+				</div>
+				{% endfor %}
+			
 		</div>
 	</div>
-{% endfor %}
+
 {% endblock %}
