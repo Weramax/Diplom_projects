@@ -29,7 +29,13 @@
 						<span class="card-text">
 							Тип задачи: {{ itm.species_task }}
 						</span>
-						<br><span class="card-text">Дата окончание задачи:
+						<br>
+						<span class="card-text">
+							Ответственный(е): {{ itm.user.exclude }} 
+							
+						<br>
+						<span class="card-text">Дата создания задачи: {{ itm.created_task }}</span>
+						</span><br><span class="card-text">Дата окончание задачи:
 						{{ itm.finish_task }} </span>
 					</div>
 				</div>

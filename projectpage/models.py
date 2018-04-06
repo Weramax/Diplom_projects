@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Species_Task(models.Model):
 	name = models.CharField(max_length = 250)
 	description = models.TextField()
@@ -29,11 +30,12 @@ class Project(models.Model):
     created_task = models.DateField(verbose_name='Дата создания',auto_now_add=True)
 
     finish_task = models.DateField(verbose_name='Дата окончания')
+
+    user = models.ManyToManyField('auth.User')
     
     description = models.TextField()
 
     def __str__(self):
     	return self.name
-
 
    

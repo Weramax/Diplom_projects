@@ -25,6 +25,13 @@
 				{% endfor %}
 			</select>
 			<br>
+			<label>Исполнители</label>
+			<select name="user_task" class="form-control" id="exampleFormControlSelect2">{% for itm in user %}>
+				<option >
+					{{ itm.username}}
+				</option>
+				{% endfor %}
+			</select>
 			<input type="date" name="finish_date">
 			<br>
 			<input type="submit" class="btn btn-primary" value="Создать">

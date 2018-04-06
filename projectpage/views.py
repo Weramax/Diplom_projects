@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-
+from django.db.models import Q
 from .models import Project, Species_project, Species_Task
 
 
@@ -11,7 +11,9 @@ def main(request):
 
 def details(request, pk):
 	project = Project.objects.filter(species_id=pk)
+	
 	species_projects = Species_project.objects.get(id=pk)
+	
 
 	return render(request, 'projects/details_project.html', {'project':project, 'species_projects':species_projects})
 
@@ -28,7 +30,9 @@ def create_project(request):
 
 def create_project_task(request, pk):
 	task_species = Species_Task.objects.all()
-
+	#users_task = auth_user()
+	#for user_task in users_task:
+	#	user_task.groups.all()
 
 	if request.method == 'POST':
 		name = request.POST.get('name')
