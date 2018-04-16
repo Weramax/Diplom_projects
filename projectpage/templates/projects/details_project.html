@@ -18,7 +18,7 @@
 				<div class="p-2">
 					<div class="card">
 					<div class="card-header">
-					<h3 class="card-title">{{ itm.name}}</h3>
+					<h3 class="card-title">{{ itm.name }}</h3>
 					</div>
 					
 					<div card-body>
@@ -30,18 +30,24 @@
 							Тип задачи: {{ itm.species_task }}
 						</span>
 						<br>
+						
 						<span class="card-text">
-							Ответственный(е): {{ itm.user.exclude }} 
-							
+
+							Ответственный(е): 
+								{% for items in itm.user.values %}
+									{{ items.first_name }}&nbsp{{ items.last_name }}{% if not forloop.last %},{% else %}.{% endif %}
+								{% endfor %}
 						<br>
 						<span class="card-text">Дата создания задачи: {{ itm.created_task }}</span>
 						</span><br><span class="card-text">Дата окончание задачи:
 						{{ itm.finish_task }} </span>
+						<a href="/{{ species_projects.id }}/pdf" class="btn btn-primary" >
+						Открыть
+					</a>
 					</div>
 				</div>
 				</div>
-				{% endfor %}
-			
+			{% endfor %}
 		</div>
 	</div>
 

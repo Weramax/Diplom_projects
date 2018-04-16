@@ -14,8 +14,7 @@
 			<input required="True" type="text" class="form-control" name="name">
 			<br>
 			<label>Description</label>
-			<textarea required="True" class="form-control" name="description" id="exampleFormControlTextarea1" rows="3">
-			</textarea>
+			<textarea required="True" class="form-control" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>
 			<br>
 			<label>Вид задачи</label>
 			<select name="species_task" class="form-control" id="exampleFormControlSelect1">{% for itm in task_species %}
@@ -26,9 +25,9 @@
 			</select>
 			<br>
 			<label>Исполнители</label>
-			<select name="user_task" class="form-control" id="exampleFormControlSelect2">{% for itm in user %}>
-				<option >
-					{{ itm.username}}
+			<select name="user_task" class="form-control" id="exampleFormControlSelect2" multiple="multiple">{% for itm in user_list %}>
+				<option value="{{ itm.id }}">
+					{{ itm.first_name }}&nbsp{{ itm.last_name }}
 				</option>
 				{% endfor %}
 			</select>
