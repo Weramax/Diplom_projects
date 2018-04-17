@@ -22,6 +22,7 @@
 					</div>
 					
 					<div card-body>
+						<a href="/{{ itm.id }}/deleteprojectsk" class="btn btn-primary">Удалить задачу</a>
 						<span class="card-text">
 							{{ itm.description }}
 						</span>
@@ -41,9 +42,7 @@
 						<span class="card-text">Дата создания задачи: {{ itm.created_task }}</span>
 						</span><br><span class="card-text">Дата окончание задачи:
 						{{ itm.finish_task }} </span>
-						<a href="/{{ species_projects.id }}/pdf" class="btn btn-primary" >
-						Открыть
-					</a>
+						
 					</div>
 				</div>
 				</div>

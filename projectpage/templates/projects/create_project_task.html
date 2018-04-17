@@ -26,7 +26,7 @@
 			<br>
 			<label>Исполнители</label>
 			<select name="user_task" class="form-control" id="exampleFormControlSelect2" multiple="multiple">{% for itm in user_list %}>
-				<option value="{{ itm.id }}">
+				<option value={{ itm.id }}>
 					{{ itm.first_name }}&nbsp{{ itm.last_name }}
 				</option>
 				{% endfor %}

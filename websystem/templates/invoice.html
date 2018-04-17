@@ -1,14 +1,20 @@
-
+{% load static %}
+{{ csrf_token }} 
  <html>
      <head>
-        <meta content='text/html' charset='Windows-1251' http-equiv='Content-Type'>
 
+        <META content="text/html; charset=utf-8" http-equiv="Content-Type">
+         <link href="http://allfont.ru/allfont.css?fonts=bebas" rel="stylesheet" type="text/css" />
 
          <title>Title</title>
-         <style type="text/css">
-             body {
+        <style type="text/css">
+            
+
+
+            body {
+                 font-family: 'Bebas', arial;
                  font-weight: 200;
-                 font-size: 14px;
+                 font-size: 50px;
              }
              .header {
                  font-size: 20px;
@@ -23,6 +29,7 @@
                 padding: 10px 20px 0px 20px;  
              }
              .title span {
+                font-family: Arial;
                  color: #007cae;
              }
              .details {
@@ -31,15 +38,21 @@
                  /*margin-left: 40%;*/
              }
              .hrItem {
+                font-family: Arial;
                  border: none;
                  height: 1px;
                  /* Set the hr color */
                  color: #333; /* old IE */
                  background-color: #fff; /* Modern Browsers */
              }
-         </style>
+      
+        </style> 
+            
+
+             
      </head>
      <body>
+
          <div class='wrapper'>
              <div class='header'>
                  <p class='title'>{{ species_project.name }} </p>
@@ -47,7 +60,7 @@
          <div>
               {% for itm in project %}
          <div class='details'>
-             {{ itm.name }}
+             {{ itm.id }}
          </div>
              {% endfor %}
              <hr class='hrItem' />

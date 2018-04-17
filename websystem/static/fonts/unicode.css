@@ -1,0 +1,63 @@
+@font-face {
+	font-family: CODE2000;
+	src: url("CODE2000.TTF")
+}
+
+/*
+@font-face {
+	font-family: arialuni;
+	font-weight: bold;
+	src: url("font/CODE2000.TTF")
+}
+@font-face {
+	font-family: arialuni;
+	font-style: italic;	
+	src: url("font/CODE2000.TTF")
+}
+@font-face {
+	font-family: arialuni;
+	font-weight: bold;
+	font-style: italic;	
+	src: url("font/CODE2000.TTF")
+}
+*/
+
+html {
+    font-family: CODE2000;
+}
+
+body {
+
+                 font-weight: 200;
+                 font-size: 14px;
+             }
+             .header {
+                 font-size: 20px;
+                 font-weight: 100;
+                 text-align: center;
+                 color: #007cae;
+             }
+             .title {
+                 font-size: 22px;
+                 font-weight: 100;
+                /* text-align: right;*/
+                padding: 10px 20px 0px 20px;  
+             }
+             .title span {
+                font-family: Arial;
+                 color: #007cae;
+             }
+             .details {
+                 padding: 10px 20px 0px 20px;
+                 text-align: left !important;
+                 /*margin-left: 40%;*/
+             }
+             .hrItem {
+                font-family: Arial;
+                 border: none;
+                 height: 1px;
+                 /* Set the hr color */
+                 color: #333; /* old IE */
+                 background-color: #fff; /* Modern Browsers */
+             }
+      
