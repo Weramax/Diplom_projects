@@ -15,6 +15,11 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = "/media/"
+
+
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Quick-start development settings - unsuitable for production
@@ -33,9 +38,11 @@ ALLOWED_HOSTS = ['localhost', 'localhost:8000','127.0.0.1', '127.0.0.1:8000']
 
 INSTALLED_APPS = [
     'projectpage',
+    'loginsys',
 
 
 
+    'bootstrap3',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -130,3 +137,5 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_URL = '/static/'
+
+

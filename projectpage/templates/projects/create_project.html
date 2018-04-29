@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-
+<div class="container pages">
 	<form action="/project/createproject" method="POST">
 		{% csrf_token %}
 		<div class="form-group">
@@ -26,4 +26,5 @@
 			<input type="submit" class="btn btn-primary" value="Создать">
 		</div>
 	</form>
+</div>
 {% endblock %}

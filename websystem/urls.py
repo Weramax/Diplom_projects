@@ -16,9 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls import url, include
 
+from django.conf import settings
+from django.views.static import serve
+
 # from projectpage import urls as project_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('projectpage.urls'))
+    url(r'^', include('projectpage.urls')),
+    url(r'^auth/', include('loginsys.urls'))
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        url(r'^media/(?P<path>.*)$', serve, { 'document_root': settings.MEDIA_ROOT, }),
+    ]

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Species_Task(models.Model):
@@ -19,6 +20,11 @@ class Species_project(models.Model):
 	def __str__(self):
 		return self.name
 
+
+class Documents(models.Model):
+	species = models.ForeignKey('Species_project', on_delete=models.CASCADE)
+	file = models.FileField(upload_to="documents/%Y/%m/%d")
+
 class Project(models.Model):
 
     name = models.CharField(max_length = 250)
@@ -31,11 +37,14 @@ class Project(models.Model):
 
     finish_task = models.DateField(verbose_name='Дата окончания')
 
-    user = models.ManyToManyField('auth.User')
+    user = models.ManyToManyField(User, through='UserProject')
     
     description = models.TextField()
 
     def __str__(self):
     	return self.name
 
-   
+class UserProject(models.Model):
+	project = models.ForeignKey(Project, on_delete = models.CASCADE)
+	user = models.ForeignKey(User, on_delete = models.CASCADE)
+	

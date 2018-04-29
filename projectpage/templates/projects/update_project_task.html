@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 
 {% block title_block %}
-	Создание проекта
+	Обновление проекта
 {% endblock %}
 
 {% block content %}
 	<div class="container pages">
-		
+
 		<form action="" method="POST">
 		{% csrf_token %}
 		<div class="form-group">
 			<label>Name</label>
-			<input required="True" type="text" class="form-control" name="name">
+			<input required="True" type="text" class="form-control" name="name" value={{ project_select.nam		e }}>
 			<br>
 			<label>Description</label>
-			<textarea required="True" class="form-control" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>
+			<textarea required="True" class="form-control" name="description" id="exampleFormControlTextarea1" rows="3">{{ project_select.description }}</textarea>
 			<br>
 			<label>Вид задачи</label>
 			<select name="species_task" class="form-control" id="exampleFormControlSelect1">{% for itm in task_species %}
@@ -35,8 +35,8 @@
 			<br>
 			<input type="submit" class="btn btn-primary" value="Создать">
 			</div>
-		
-		</div>
-	</form>
-{% endblock %}
 
+
+	</form>
+		</div>
+{% endblock %}
