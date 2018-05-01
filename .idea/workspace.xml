@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="de0df9cc-087a-4864-9c6e-b5bbc6a1a554" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/documents/2018/04/29/Screenshot_1.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/documents/2018/04/29/somefilename.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/media/documents/2018/04/29/somefilename_1.pdf" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
+    <list default="true" id="de0df9cc-087a-4864-9c6e-b5bbc6a1a554" name="Default" comment="Last_with file">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/projectpage/forms.py" afterPath="$PROJECT_DIR$/projectpage/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/projectpage/models.py" afterPath="$PROJECT_DIR$/projectpage/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/projectpage/templates/projects/details_project.html" afterPath="$PROJECT_DIR$/projectpage/templates/projects/details_project.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/projectpage/templates/projects/update_project_task.html" afterPath="$PROJECT_DIR$/projectpage/templates/projects/update_project_task.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/projectpage/views.py" afterPath="$PROJECT_DIR$/projectpage/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -345,7 +336,14 @@
       <option name="project" value="LOCAL" />
       <updated>1525043803250</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Last_with file">
+      <created>1525190511283</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1525190511283</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
