@@ -22,6 +22,7 @@ class Species_project(models.Model):
 
 
 class Documents(models.Model):
+	name = models.CharField(max_length=50)
 	species = models.ForeignKey('Species_project', on_delete=models.CASCADE)
 	file = models.FileField(upload_to="documents/%Y/%m/%d")
 

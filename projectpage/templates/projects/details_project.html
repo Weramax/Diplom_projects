@@ -12,18 +12,22 @@
 <br>
 		<span>Описание: 
 		{{ species_projects.description }}
-			{% for files in documents %}
-			{{ files.file }}
-			{% endfor %}
+
 		</span>
 		<div>
+
+			{% for files in documents %}
+				<a href="/media/{{ files.file }}" target="_blank">{{ files.name }}</a>
+				{% endfor %}
+
 			<form method="post" enctype="multipart/form-data">
     			{% csrf_token %}
-    			{{ form }}
+				{{ form }}
+
     			<input type="submit">
 			</form>
 		</div>
-		</div>
+
 
 		<div class="d-flex flex-row">
 			

@@ -11,7 +11,7 @@
 		{% csrf_token %}
 		<div class="form-group">
 			<label>Name</label>
-			<input required="True" type="text" class="form-control" name="name" value={{ project_select.nam		e }}>
+			<input required="True" type="text" class="form-control" name="name" value={{ project_select.name }}>
 			<br>
 			<label>Description</label>
 			<textarea required="True" class="form-control" name="description" id="exampleFormControlTextarea1" rows="3">{{ project_select.description }}</textarea>
