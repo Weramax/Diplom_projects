@@ -1,71 +1,83 @@
 {% extends "base.html" %}
-
 {% block title_block %}
- 	{{ species_projects.name }}
+	{{ species_projects.name }}
 {% endblock %}
-
 {% block content%}
 
-<div class="container pages">
-	<h1>{{ species_projects.name }}</h1>
-	<a href="/{{ species_projects.id }}/create_project_task" class="btn btn-primary">Создать задачу</a>
-<br>
-		<span>Описание: 
-		{{ species_projects.description }}
-
-		</span>
-		<div>
-
-			{% for files in documents %}
-				<a href="/media/{{ files.file }}" target="_blank">{{ files.name }}</a>
-				{% endfor %}
-
-			<form method="post" enctype="multipart/form-data">
-    			{% csrf_token %}
-				{{ form }}
-
-    			<input type="submit">
-			</form>
-		</div>
+<head>
+	<style>
+		.flex-cont {
+		display: flex;
+		flex-wrap: wrap;
+		}
 
 
-		<div class="d-flex flex-row">
-			
-				{% for itm in project %}
-				<div class="p-2">
-					<div class="card">
-					<div class="card-header">
-					<h3 class="card-title">{{ itm.name }}</h3>
+	</style>
+</head>
+
+<div class="container-fluid pages" style="width: 1000px;">
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-8">
+					<div class="row ">
+						<div class="col-md-8">
+							<h3>
+								{{ species_projects.name }}
+							</h3>
+						</div>
+						<div class="col-md-4">
+
+							<a href="/{{ species_projects.id }}/create_project_task" class="btn btn-md btn-primary">Создать задачу</a>
+						</div>
 					</div>
-					
-					<div card-body>
-						<a href="/{{ itm.id }}/deleteprojectsk" class="btn btn-primary">Удалить задачу</a>
-						<span class="card-text">
-							{{ itm.id }}
-							{{ itm.description }}
-						</span>
-						<br>
-						<span class="card-text">
-							Тип задачи: {{ itm.species_task }}
-						</span>
-						<br>
-						
-						<span class="card-text">
-
-							Ответственный(е): 
-								{% for items in itm.user.values %}
-									{{ items.first_name }}&nbsp{{ items.last_name }}{% if not forloop.last %},{% else %}.{% endif %}
-								{% endfor %}
-						<br>
-						<span class="card-text">Дата создания задачи: {{ itm.created_task }}</span>
-						</span><br><span class="card-text">Дата окончание задачи:
-						{{ itm.finish_task }} </span>
-						
+					<div class="row flex-cont">
+						{% for itm in project %}
+						<div class="col-md-4">
+							<div class="card">
+								<h5 class="card-header">
+									{{ itm.name }}
+								</h5>
+								<div class="card-body">
+									<p class="card-text">
+										{{ itm.description }}
+										Ответственный(е):
+										{% for items in itm.user.values %}
+										{{ items.first_name }}&nbsp{{ items.last_name }}{% if not forloop.last %},{% else %}.{% endif %}
+									{% endfor %}
+									</p>
+								</div>
+								<div class="card-footer">
+									Тип задачи: {{ itm.species_task }}
+									Дата окончание задачи: {{ itm.finish_task }}
+								</div>
+							</div>
+						</div>
+						{% endfor %}
 					</div>
 				</div>
+				<div class="col-md-4">
+					<ul>
+						{% for files in documents %}
+						<li class="list-item">
+							<a href="/media/{{ files.file }}" target="_blank">{{ files.name }}</a>
+						</li>
+						{% endfor %}
+					</ul>
+					<form role="form" method="post" enctype="multipart/form-data">
+						<div class="form-group">
+							{% csrf_token %}
+							{{ form }}
+							<p class="help-block">
+								Example block-level help text here.
+							</p>
+						</div>
+						<input type="submit" class="btn btn-primary">
+					</form>
 				</div>
-			{% endfor %}
+			</div>
 		</div>
 	</div>
-
+</div>
 {% endblock %}

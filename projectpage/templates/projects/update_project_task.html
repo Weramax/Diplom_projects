@@ -10,6 +10,7 @@
 		<form action="" method="POST">
 		{% csrf_token %}
 		<div class="form-group">
+			<input type="text" name="species_project_id" value="{{ project_select.species_id }}" style="display: none;"></input>
 			<label>Name</label>
 			<input required="True" type="text" class="form-control" name="name" value={{ project_select.name }}>
 			<br>
@@ -31,9 +32,10 @@
 				</option>
 				{% endfor %}
 			</select>
-			<input type="date" name="finish_date">
+			<input type="date" name="finish_date" value={{ project_select.finish_task }}>
 			<br>
-			<input type="submit" class="btn btn-primary" value="Создать">
+			<input type="submit" class="btn btn-primary" value="Обновить">
+			<a href="/{{ itm.id }}/deleteprojectsk" class="btn btn-primary">Удалить задачу</a>
 			</div>
 
 

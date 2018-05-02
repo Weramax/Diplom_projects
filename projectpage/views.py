@@ -165,22 +165,22 @@ def update_project_task(request, pk):
     else:
         user_list = User.objects.all()
         task_species = Species_Task.objects.all()
-        project_select = Project.objects.get(id = pk )
+        project_select = Project.objects.get(id = pk)
 
         if request.method == 'POST':
-            user_project_delete = UserProject.objects.get(project_id=pk)
-            user_project_delete.delete()
+            project_select.delete()
+            species_project_id = request.POST.get('species_project_id')
             name = request.POST.get('name')
             description = request.POST.get('description')
             species_task = request.POST.get('species_task')
             date_finish = request.POST.get('finish_date')
             user_task = request.POST.getlist('user_task')
-            project_task = Project.objects.get_or_update(name = name, species_id=pk,  species_task_id=species_task, finish_task=date_finish, description=description)
+            project_task = Project.objects.get_or_create(name = name, species_id=species_project_id,  species_task_id=species_task, finish_task=date_finish, description=description)
 
             for itm in user_task:
                 user_main = UserProject.objects.get_or_create(project = project_task[0], user_id = int(itm))
 
-            return redirect('/project/'+pk)
+            return redirect('/project/'+species_project_id)
 
 
 

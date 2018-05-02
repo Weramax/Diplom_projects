@@ -23,14 +23,12 @@
 						<br>
 
 						<span class="card-text">
-
 							Ответственный(е):
 								{% for items in itm.user.values %}
 									{{ items.first_name }}&nbsp{{ items.last_name }}{% if not forloop.last %},{% else %}.{% endif %}
 								{% endfor %}
 						<br>
-						<span class="card-text">Дата создания задачи: {{ itm.created_task }}</span>
-						</span><br><span class="card-text">Дата окончание задачи:
+						<span class="card-text">Дата окончание задачи:
 						{{ itm.finish_task }} </span>
 
 					</div>
