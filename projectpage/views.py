@@ -197,3 +197,10 @@ def delete_project_task(request, pk):
         project.delete()
         return redirect('/')
 
+def complete_task(request, pk):
+	if not request.user.is_authenticated:
+		return redirect('auth/login')
+	else:
+		project = Project(id = pk)
+		project._do_update(complete_value = '1')
+		return redirect('/')

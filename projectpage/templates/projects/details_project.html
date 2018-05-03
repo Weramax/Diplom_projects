@@ -36,9 +36,15 @@
 						{% for itm in project %}
 						<div class="col-md-4">
 							<div class="card">
-								<h5 class="card-header">
+								{% if itm.complete_value == '1' %}
+								<h4 class="card-header" style="background: green; color: white;">
 									{{ itm.name }}
-								</h5>
+								</h4>
+								{% else %}
+								<h4 class="card-header" style="background: blue; color: white; text-size: 15px;">
+									{{ itm.name }}
+								</h4>
+								{% endif %}
 								<div class="card-body">
 									<p class="card-text">
 										{{ itm.description }}
@@ -51,6 +57,7 @@
 								<div class="card-footer">
 									Тип задачи: {{ itm.species_task }}
 									Дата окончание задачи: {{ itm.finish_task }}
+									<a href="/{{ itm.id }}/update_project_task">редактировать</a>
 								</div>
 							</div>
 						</div>

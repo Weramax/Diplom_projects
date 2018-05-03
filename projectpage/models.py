@@ -29,7 +29,7 @@ class Documents(models.Model):
 class Project(models.Model):
 
     name = models.CharField(max_length = 250)
-    
+    complete_value = models.CharField(max_length=1)
     species = models.ForeignKey('Species_project', on_delete = models.CASCADE)
 
     species_task = models.ForeignKey('Species_Task', on_delete = models.CASCADE)
@@ -39,8 +39,10 @@ class Project(models.Model):
     finish_task = models.DateField(verbose_name='Дата окончания')
 
     user = models.ManyToManyField(User, through='UserProject')
-    
+
     description = models.TextField()
+
+
 
     def __str__(self):
     	return self.name
