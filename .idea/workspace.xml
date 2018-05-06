@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de0df9cc-087a-4864-9c6e-b5bbc6a1a554" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/projectpage/migrations/0002_documents.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/projectpage/migrations/0003_documents_name.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/projectpage/migrations/0004_project_complete_value.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/projectpage/migrations/0001_initial.py" afterPath="$PROJECT_DIR$/projectpage/migrations/0001_initial.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/projectpage/templates/projects/details_project.html" afterPath="$PROJECT_DIR$/projectpage/templates/projects/details_project.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/projectpage/views.py" afterPath="$PROJECT_DIR$/projectpage/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/websystem/settings.py" afterPath="$PROJECT_DIR$/websystem/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/websystem/templates/base.html" afterPath="$PROJECT_DIR$/websystem/templates/base.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -428,7 +419,14 @@
       <option name="project" value="LOCAL" />
       <updated>1525363592040</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Last_with css">
+      <created>1525631210186</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1525631210186</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
