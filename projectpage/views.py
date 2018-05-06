@@ -1,5 +1,5 @@
 import sys
-
+import datetime
 from django.shortcuts import render, redirect
 from .models import Project, Species_project, Species_Task, UserProject, Documents
 
@@ -112,7 +112,7 @@ def details(request, pk):
 			form = UploadFileForm()
 
 
-		return render(request, 'projects/details_project.html', {'form': form, 'project':project, 'species_projects':species_projects, 'documents':documents})
+		return render(request, 'projects/details_project.html', {'form': form, 'project':project, 'species_projects':species_projects, 'documents':documents, 'date_now':datetime.datetime.now()})
 
 def details_user(request):
 	if not request.user.is_authenticated:
@@ -201,6 +201,8 @@ def complete_task(request, pk):
 	if not request.user.is_authenticated:
 		return redirect('auth/login')
 	else:
-		project = Project(id = pk)
-		project._do_update(complete_value = '1')
+		project = Project.objects.filter(id = pk)
+		for itm in project:
+			itm.complete_value = 1
+			itm.save()
 		return redirect('/')

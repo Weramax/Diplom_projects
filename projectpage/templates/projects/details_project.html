@@ -40,6 +40,7 @@
 								<h4 class="card-header" style="background: green; color: white;">
 									{{ itm.name }}
 								</h4>
+
 								{% else %}
 								<h4 class="card-header" style="background: blue; color: white; text-size: 15px;">
 									{{ itm.name }}
@@ -58,6 +59,7 @@
 									Тип задачи: {{ itm.species_task }}
 									Дата окончание задачи: {{ itm.finish_task }}
 									<a href="/{{ itm.id }}/update_project_task">редактировать</a>
+									<a href="/{{ itm.id }}/compete_task">Завершить</a>
 								</div>
 							</div>
 						</div>
