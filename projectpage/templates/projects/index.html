@@ -7,13 +7,13 @@
 {% block content %}
 <div class="container pages">
 <a href="project/createproject" class="btn btn-primary">Create project</a>
-		<div class="d-flex flex-row">
+		<div class="row flex-cont">
 		
 					{% for itm in species_projects%}
-				<div class="p-2">
+				<div class="col-md-3">
 				<div class="card">
 						<div class="card-header">
-							<h3 class="card-title">{{ itm.name }}</h2>
+							<h2 class="card-title">{{ itm.name }}</h2>
 
 								<a href="/{{ itm.id }}/pdf" target="_blank"><i class="fas fa-file-pdf"></i></a>
 						</div>

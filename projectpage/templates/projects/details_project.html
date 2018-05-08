@@ -29,7 +29,7 @@
 						</div>
 						<div class="col-md-4">
 
-							<a href="/{{ species_projects.id }}/create_project_task" class="btn btn-md btn-primary">Создать задачу</a>
+							<a href="/{{ species_projects.id }}/create_project_task" class="btn btn-md btn-primary fancybox">Создать задачу</a>
 						</div>
 					</div>
 					<div class="row flex-cont">
@@ -59,7 +59,9 @@
 									Тип задачи: {{ itm.species_task }}
 									Дата окончание задачи: {{ itm.finish_task }}
 									<a href="/{{ itm.id }}/update_project_task">редактировать</a>
-									<a href="/{{ itm.id }}/compete_task">Завершить</a>
+									{% if not itm.complete_value == '1' %}
+										<a href="/{{ itm.id }}/compete_task">Завершить</a>
+									{% endif%}
 								</div>
 							</div>
 						</div>

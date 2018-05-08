@@ -4,14 +4,21 @@
 {% block content%}
 
 <div class="container pages">
-		<div class="d-flex flex-row">
+		<div class="row flex-cont">
 
 				{% for itm in project %}
-				<div class="p-2">
+				<div class="col-md-3">
 					<div class="card">
-					<div class="card-header">
-					<h3 class="card-title">{{ itm.name }}</h3>
-					</div>
+					{% if itm.complete_value == '1' %}
+								<h4 class="card-header" style="background: green; color: white;">
+									{{ itm.name }}
+								</h4>
+
+								{% else %}
+								<h4 class="card-header" style="background: blue; color: white; text-size: 15px;">
+									{{ itm.name }}
+								</h4>
+								{% endif %}
 
 					<div card-body>
 							{{ itm.description }}

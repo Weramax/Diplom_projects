@@ -15,7 +15,10 @@
 
 	<link rel="stylesheet" href="{% static 'fontawesome-free-5.0.10/web-fonts-with-css/css/fontawesome-all.css' %}">
 
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js"></script>
 
 	<link rel="stylesheet" href="{% static 'style.css'%}">
 
@@ -67,7 +70,16 @@
 
 
 
-
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".fancybox").fancybox(
+		{
+		'type':'iframe',
+        'width': 600,
+        'height': 300
+		});
+	});
+</script>
 
 
 
