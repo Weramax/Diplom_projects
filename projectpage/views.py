@@ -121,6 +121,13 @@ def details_user(request):
 		project = Project.objects.filter(user = request.user.pk)
 		return render(request, 'projects/my_details.html', {'project':project})
 
+def details_task_project(request, pk):
+	if not request.user.is_authenticated:
+		return redirect('auth/login')
+	else:
+		project = Project.objects.filter(id = pk)
+		return render(request, 'projects/task_details_project.html', {'project':project})
+
 def create_project(request):
 	if not request.user.is_authenticated:
 		return redirect('auth/login/')

@@ -24,4 +24,25 @@
     margin-top: 70px;
     width: 1000px;
 }
+.card-project{
+    min-height: 150px;
+    border: 1px solid black;
+    padding: 10px 10px 10px 10px;
+    border-radius: 10px;
+    margin: 0 0 15px 0;
+}
+.my-card-project{
+    min-height: 180x;
+    border: 1px solid black;
+    padding: 10px 10px 10px 10px;
+    border-radius: 10px;
+    margin: 0 0 15px 0;
+}
 
+.card-task{
+    text-align: center;
+}
+.fancybox-content{
+    width: 700px !important;
+
+}

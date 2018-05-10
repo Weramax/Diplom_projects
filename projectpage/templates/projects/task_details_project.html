@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% if not user.is_authenticated %}
+{% block menu %}
+{% endblock %}
+{% endif %}
+{% block content%}
+
+<head>
+	<style>
+		.flex-cont {
+		display: flex;
+		flex-wrap: wrap;
+		}
+
+
+	</style>
+</head>
+
+<div  style="display: block; margin-left: 90px;">
+
+
+
+						{% for itm in project %}
+
+
+
+								<h4 class="card-header">
+									{{ itm.name }}
+								</h4>
+
+
+
+										{{ itm.description }}
+										<br>
+	<br>
+										Ответственный(е):<br>
+										{% for items in itm.user.values %}
+										{{ items.first_name }}&nbsp{{ items.last_name }}{% if not forloop.last %},{% else %}.{% endif %}
+									{% endfor %}
+	<br>
+	<br>
+
+
+									Тип задачи: {{ itm.species_task }}<br>
+									Дата окончание задачи: {{ itm.finish_task }}
+									<br>
+	<br>
+									<a href="/{{ itm.id }}/update_project_task">редактировать</a>
+									{% if not itm.complete_value == '1' %}
+										<a href="/{{ itm.id }}/compete_task" target="_top">Завершить</a>
+									{% endif%}
+
+
+						{% endfor %}
+
+
+
+
+{% endblock %}

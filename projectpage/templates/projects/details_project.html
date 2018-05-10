@@ -29,13 +29,14 @@
 						</div>
 						<div class="col-md-4">
 
-							<a href="/{{ species_projects.id }}/create_project_task" class="btn btn-md btn-primary fancybox">Создать задачу</a>
+							<a href="/{{ species_projects.id }}/create_project_task" class="btn btn-md btn-primary">Создать задачу</a>
 						</div>
 					</div>
 					<div class="row flex-cont">
 						{% for itm in project %}
 						<div class="col-md-4">
-							<div class="card">
+							<a href="task-details/{{ itm.id }}" class="fancybox" style="text-decoration: none;">
+							<div class="card card-project">
 								{% if itm.complete_value == '1' %}
 								<h4 class="card-header" style="background: green; color: white;">
 									{{ itm.name }}
@@ -46,25 +47,15 @@
 									{{ itm.name }}
 								</h4>
 								{% endif %}
-								<div class="card-body">
-									<p class="card-text">
-										{{ itm.description }}
-										Ответственный(е):
-										{% for items in itm.user.values %}
-										{{ items.first_name }}&nbsp{{ items.last_name }}{% if not forloop.last %},{% else %}.{% endif %}
-									{% endfor %}
-									</p>
-								</div>
+
 								<div class="card-footer">
-									Тип задачи: {{ itm.species_task }}
+									Тип задачи: {{ itm.species_task }}<br>
 									Дата окончание задачи: {{ itm.finish_task }}
-									<a href="/{{ itm.id }}/update_project_task">редактировать</a>
-									{% if not itm.complete_value == '1' %}
-										<a href="/{{ itm.id }}/compete_task">Завершить</a>
-									{% endif%}
+
 								</div>
 							</div>
 						</div>
+					</a>
 						{% endfor %}
 					</div>
 				</div>

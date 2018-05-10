@@ -7,8 +7,9 @@
 		<div class="row flex-cont">
 
 				{% for itm in project %}
+				<a href="task-details/{{ itm.id }}" class="fancybox" style="text-decoration: none;">
 				<div class="col-md-3">
-					<div class="card">
+					<div class="card my-card-project">
 					{% if itm.complete_value == '1' %}
 								<h4 class="card-header" style="background: green; color: white;">
 									{{ itm.name }}
@@ -21,26 +22,23 @@
 								{% endif %}
 
 					<div card-body>
-							{{ itm.description }}
-						</span>
+
+
 						<br>
 						<span class="card-text">
 							Тип задачи: {{ itm.species_task }}
 						</span>
 						<br>
 
-						<span class="card-text">
-							Ответственный(е):
-								{% for items in itm.user.values %}
-									{{ items.first_name }}&nbsp{{ items.last_name }}{% if not forloop.last %},{% else %}.{% endif %}
-								{% endfor %}
+
 						<br>
-						<span class="card-text">Дата окончание задачи:
+						<span class="card-text">Дата окончание задачи: <br>
 						{{ itm.finish_task }} </span>
 
 					</div>
 				</div>
 				</div>
+				</a>
 			{% endfor %}
 
 		</div>
