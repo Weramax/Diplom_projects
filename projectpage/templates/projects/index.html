@@ -26,6 +26,18 @@
 						Открыть
 					</a>
 						</div>
+					{% if itm.progress_value != 0 %}
+					<div class="progress">
+  							<div class="progress-bar" role="progressbar" style="width: {{ itm.progress_value }}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{ itm.progress_value}}%</div>
+					</div>
+						{% else %}
+					<div class="progress">
+							<div class="progress-bar" role="progressbar" style="color: black; width: 100%; background: white;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="0">В проекте нету выполненых задач</div>
+					</div>
+						{% endif%}
+
+
+
 					</div>
 					</div>
 					{% endfor %}

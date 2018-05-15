@@ -93,6 +93,15 @@ def main(request):
 		return redirect('auth/login')
 	else:
 		species_projects = Species_project.objects.all()
+		for project_id in species_projects:
+			project = Project.objects.filter(species = project_id)
+			print (len(project))
+			if len(project) > 0:
+				len_complete = (itm for itm in project if itm.complete_value == "1")
+				progress_bar = (((len(list(len_complete))) * 100 ) // len(project))
+				project_id.progress_value = progress_bar
+				project_id.save()
+
 		return render(request, 'projects/index.html', {'species_projects': species_projects , 'mainuser': request.user})
 
 def details(request, pk):
@@ -112,7 +121,7 @@ def details(request, pk):
 			form = UploadFileForm()
 
 
-		return render(request, 'projects/details_project.html', {'form': form, 'project':project, 'species_projects':species_projects, 'documents':documents, 'date_now':datetime.datetime.now()})
+		return render(request, 'projects/details_project.html', {'form': form, 'project':project, 'species_projects':species_projects, 'documents':documents, 'date_now':datetime.datetime.now().strftime("%Y-%b-%d")})
 
 def details_user(request):
 	if not request.user.is_authenticated:
@@ -125,7 +134,19 @@ def details_task_project(request, pk):
 	if not request.user.is_authenticated:
 		return redirect('auth/login')
 	else:
+		date_now1 = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d')
 		project = Project.objects.filter(id = pk)
+		date = project[0].finish_task
+
+		for itm in project:
+			print (itm.species_task)
+			if (datetime.date.today() - itm.finish_task).days >=  0 and itm.complete_value == '1':
+				if itm.species_task_id == 2:
+					date_now =  datetime.datetime.strftime(datetime.datetime.now() + datetime.timedelta(days = 7), '%Y-%m-%d')
+					itm.finish_task = date_now
+					itm.complete_value = 0
+					itm.save()
+
 		return render(request, 'projects/task_details_project.html', {'project':project})
 
 def create_project(request):
@@ -134,10 +155,10 @@ def create_project(request):
 	else:
 		if request.method == 'POST':
 			name = request.POST.get('name')
-			short_description = request.POST.get('short_description')
+
 			description = request.POST.get('description')
 			date_finish = request.POST.get('finish_date')
-			Species_project.objects.create(name=name, short_description=short_description, description = description, finish_task=date_finish)
+			Species_project.objects.create(name=name, description = description, finish_task=date_finish)
 			return redirect('/')
 
 		return render(request, 'projects/create_project.html')
@@ -167,31 +188,43 @@ def create_project_task(request, pk):
 
 
 def update_project_task(request, pk):
-    if not request.user.is_authenticated:
-        return redirect('/auth/login/')
-    else:
-        user_list = User.objects.all()
-        task_species = Species_Task.objects.all()
-        project_select = Project.objects.get(id = pk)
+	if not request.user.is_authenticated:
+		return redirect('/auth/login/')
 
-        if request.method == 'POST':
-            project_select.delete()
-            species_project_id = request.POST.get('species_project_id')
-            name = request.POST.get('name')
-            description = request.POST.get('description')
-            species_task = request.POST.get('species_task')
-            date_finish = request.POST.get('finish_date')
-            user_task = request.POST.getlist('user_task')
-            project_task = Project.objects.get_or_create(name = name, species_id=species_project_id,  species_task_id=species_task, finish_task=date_finish, description=description)
+	else:
 
-            for itm in user_task:
-                user_main = UserProject.objects.get_or_create(project = project_task[0], user_id = int(itm))
+		user_list = User.objects.all()
+		task_species = Species_Task.objects.all()
+		project_select = Project.objects.filter(id = pk)
+		project_for_form = Project.objects.get(id = pk)
 
-            return redirect('/project/'+species_project_id)
+		if request.method == 'POST':
+			species_project_id = request.POST.get('species_project_id')
+			name = request.POST.get('name')
+			description = request.POST.get('description')
+			species_task = request.POST.get('species_task')
+			date_finish = request.POST.get('finish_date')
+			user_task = request.POST.getlist('user_task')
 
 
+			for items in project_select:
 
-        return render(request, 'projects/update_project_task.html', {'task_species': task_species, 'user_list': user_list, 'project_select': project_select})
+				items.name = name
+				items.species_id = species_project_id
+				items.species_task_id = species_task
+				items.finish_task = date_finish
+				items.description = description
+				items.complete_value = " "
+				items.save()
+
+			user_delete = UserProject.objects.filter(project = pk)
+			user_delete.delete()
+			for itm in user_task:
+				user_main = UserProject.objects.create(project = project_select[0], user_id = int(itm))
+
+			return redirect('/project/'+species_project_id)
+
+		return render(request, 'projects/update_project_task.html', {'task_species': task_species, 'user_list': user_list, 'project_select': project_for_form})
 
 
 

@@ -42,6 +42,11 @@
 									{{ itm.name }}
 								</h4>
 
+								{% elif itm.finish_task|timesince >= "1 min" and itm.complete_value != '1' %}
+								<h4 class="card-header" style="background: red; color: white; text-size: 15px;">
+									{{ itm.name }}
+									123
+								</h4>
 								{% else %}
 								<h4 class="card-header" style="background: blue; color: white; text-size: 15px;">
 									{{ itm.name }}
@@ -51,6 +56,7 @@
 								<div class="card-footer">
 									Тип задачи: {{ itm.species_task }}<br>
 									Дата окончание задачи: {{ itm.finish_task }}
+
 
 								</div>
 							</div>

@@ -45,7 +45,7 @@
 									Дата окончание задачи: {{ itm.finish_task }}
 									<br>
 	<br>
-									<a href="/{{ itm.id }}/update_project_task">редактировать</a>
+									<a href="/{{ itm.id }}/update_project_task" target="_top">редактировать</a>
 									{% if not itm.complete_value == '1' %}
 										<a href="/{{ itm.id }}/compete_task" target="_top">Завершить</a>
 									{% endif%}
