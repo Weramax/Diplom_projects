@@ -45,15 +45,17 @@
         <li>
           <a href="/">Главная</a>
         </li>
+          {% if perms.projectpage.can_add_species_project %}
         <li>
           <a href="/project/createproject">Создать проект</a>
         </li>
+          {% endif %}
         <li>
           <a href="/project/my-project">Мои задачи</a>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><span>Вы вошли как: {{ user.first_name }} {{ user.last_name }}</span></li>
+        <li style="margin: 15px 0 0 0;"><span>Вы вошли как: {{ user.first_name }} {{ user.last_name }}</span></li>
       <li><a href="/auth/logout/">Выйти</a></li>
     </ul>
     </nav>

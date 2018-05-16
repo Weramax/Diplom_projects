@@ -1,7 +1,9 @@
 {% extends "base.html" %}
+{% load bootstrap3 %}
 {% if not user.is_authenticated %}
 {% block menu %}
 {% endblock %}
+
 {% endif %}
 {% block content%}
 
@@ -11,31 +13,91 @@
 		display: flex;
 		flex-wrap: wrap;
 		}
+		.detailBox {
+    width:320px;
+    border:1px solid #bbb;
+    margin:50px;
+}
+.row{
+	margin: 0;
+}
+.titleBox {
+    background-color:#fdfdfd;
+    padding:10px;
+}
+.titleBox label{
+  color:#444;
+  margin:0;
+  display:inline-block;
+}
+
+.commentBox {
+    padding:10px;
+    border-top:1px dotted #bbb;
+}
+.commentBox .form-group:first-child, .actionBox .form-group:first-child {
+    width:80%;
+}
+.commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
+    width:100%;
+}
+.actionBox .form-group * {
+    width:100%;
+}
+.taskDescription {
+    margin-top:10px 0;
+}
+.commentList {
+    padding:0;
+    list-style:none;
+    max-height:200px;
+    overflow:auto;
+}
+.commentList li {
+    margin:0;
+    margin-top:10px;
+}
+.commentList li > div {
+    display:table-cell;
+}
+.commenterImage {
+    width:30px;
+    margin-right:5px;
+    height:100%;
+    float:left;
+}
+.commenterImage img {
+    width:100%;
+    border-radius:50%;
+}
+.commentText p {
+    margin:0;
+}
+.sub-text {
+    color:#aaa;
+    font-family:verdana;
+    font-size:11px;
+}
+.actionBox {
+    border-top:1px dotted #bbb;
+    padding:10px;
+}
 
 
 	</style>
 </head>
 
 <div  style="display: block; margin-left: 90px;">
-
-
-
-						{% for itm in project %}
-
-
-
-								<h4 class="card-header">
-									{{ itm.name }}
-								</h4>
-
-
-
-										{{ itm.description }}
-										<br>
+	{% for itm in project %}
+		<h4 class="card-header">
+			{{ itm.name }}
+		</h4>
+		{{ itm.description }}
+		<br>
 	<br>
-										Ответственный(е):<br>
-										{% for items in itm.user.values %}
-										{{ items.first_name }}&nbsp{{ items.last_name }}{% if not forloop.last %},{% else %}.{% endif %}
+	Ответственный(е):<br>
+	{% for items in itm.user.values %}
+	{{ items.first_name }}&nbsp{{ items.last_name }}{% if not forloop.last %},{% else %}.{% endif %}
 									{% endfor %}
 	<br>
 	<br>
@@ -52,8 +114,39 @@
 
 
 						{% endfor %}
+	<div class="detailBox">
+    <div class="titleBox">
+      <label>Comment Box</label>
+    </div>
+    <div class="commentBox">
+		<p class="taskDescription">Тут вы можете оставлять комментарии к задаче</p>
+    </div>
+
+		<div class="actionBox">
+
+        <ul class="commentList">
+			{% for itm in comments %}
+            <li>
+                <div class="commentText">
+                    <p class="">{{ itm.content }}</p> <span class="date sub-text">{{ itm.pub_date }}</span>
+
+                </div>
+            </li>
+			{% endfor %}
+		</ul>
 
 
-
+	<form class="form-inline" method="POST">
+		{% csrf_token %}
+		<div class="form-group">
+			<input class="form-control" name="comment_text" type="text" placeholder="Your comments" />
+		</div>
+		<div class="form-group">
+			<input class="btn btn-default" type="submit" value="Отправить">
+		</div>
+	</form>
+		</div>
+	</div>
+</div>
 
 {% endblock %}

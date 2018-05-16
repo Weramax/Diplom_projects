@@ -16,7 +16,6 @@
 </head>
 
 <div class="container-fluid pages" style="width: 1000px;">
-
 	<div class="row">
 		<div class="col-md-12">
 			<div class="row">
@@ -27,18 +26,29 @@
 								{{ species_projects.name }}
 							</h3>
 						</div>
-						<div class="col-md-4">
-
-							<a href="/{{ species_projects.id }}/create_project_task" class="btn btn-md btn-primary">Создать задачу</a>
+						<div class="col-md-4" style="margin: 13px 0px 0px 0px;">
+							{% if perms.projectpage.can_add_project %}
+								<a href="/{{ species_projects.id }}/create_project_task" class="btn btn-md btn-primary">Создать задачу</a>
+							{% endif %}
+						</div>
+						<div style="float: left; padding-left: 15px">
+							<form method="get">
+								<button type="submit" class="btn btn-sm btn-primary btn-raised mr-3">Сортировать</button>
+								<input name="sort" type="checkbox" value="finish_task" {{ finish_task }}>По дате
+								<input name="sort" type="checkbox" value="complete_value" {{ complete_value }}>Другое
+								<input name="sort" type="checkbox" value="name" {{ name }}> По алфавиту
+							</form>
 						</div>
 					</div>
+
+
 					<div class="row flex-cont">
 						{% for itm in project %}
-						<div class="col-md-4">
+						<div class="col-md-4" >
 							<a href="task-details/{{ itm.id }}" class="fancybox" style="text-decoration: none;">
-							<div class="card card-project">
+							<div class="card card-project" style="display:block;">
 								{% if itm.complete_value == '1' %}
-								<h4 class="card-header" style="background: green; color: white;">
+								<h4 class="card-header" style="background: green; color: white; display:block;">
 									{{ itm.name }}
 								</h4>
 
@@ -52,10 +62,16 @@
 									{{ itm.name }}
 								</h4>
 								{% endif %}
+								<div class="card-body" style="display:block;  float:left;">
+									Исполнитель(и): {% for items in itm.user.values %}
+										{{ items.first_name }}&nbsp{{ items.last_name }}{% if not forloop.last %},{% else %}.{% endif %}
+									{% endfor %}
+								</div>
 
-								<div class="card-footer">
-									Тип задачи: {{ itm.species_task }}<br>
-									Дата окончание задачи: {{ itm.finish_task }}
+								<div class="card-footer" style="display:block;bottom: 30px;position: absolute;}">
+									<span>Тип задачи: <br>{{ itm.species_task }}</span>
+									<br>
+									<span>Дата окончание задачи: <br>{{ itm.finish_task }}</span>
 
 
 								</div>
@@ -66,6 +82,13 @@
 					</div>
 				</div>
 				<div class="col-md-4">
+					<div>
+						<h4>Описание проекта</h4>
+						<span>{{ species_projects.description }}</span>
+					</div>
+					<br>
+					<div>
+					<h4>Файлы к проекту</h4>
 					<ul>
 						{% for files in documents %}
 						<li class="list-item">
@@ -83,6 +106,7 @@
 						</div>
 						<input type="submit" class="btn btn-primary">
 					</form>
+						</div>
 				</div>
 			</div>
 		</div>

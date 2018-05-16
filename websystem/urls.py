@@ -21,10 +21,15 @@ from django.views.static import serve
 
 # from projectpage import urls as project_urls
 
+
+
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('projectpage.urls')),
-    url(r'^auth/', include('loginsys.urls'))
+    url(r'^auth/', include('loginsys.urls')),
+
+
 ]
 
 if settings.DEBUG:

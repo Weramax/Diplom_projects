@@ -5,44 +5,80 @@
 {% endblock %}
 
 {% block content %}
-<div class="container pages">
-<a href="project/createproject" class="btn btn-primary">Create project</a>
-		<div class="row flex-cont">
-		
-					{% for itm in species_projects%}
+<head>
+	<style>
+		.flex-cont {
+		display: flex;
+		flex-wrap: wrap;
+		}
+
+
+	</style>
+</head>
+
+    <div class="container-fluid pages" style="width: 1000px;">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-9">
+					<div class="row flex-cont">
+						{% for itm in species_projects%}
+						<div class="col-md-4" style="display:block; min-height:230px; margin: 15px 0 0 0;border: 1px solid black; border-radius:10px; padding: 10px 10px 10px 10px;">
+							<div class="card bg-default" style="display:block;">
+								<h5 class="card-header">
+									{{ itm.name }}
+								</h5>
+								<div class="card-body">
+									<p class="card-text">
+										{{ itm.description|truncatewords:15 }}
+									</p>
+								</div>
+								<div class="card-footer" style="position: absolute; bottom: 0;">
+									Дата окончания проекта: <br> {{ itm.finish_task }}
+
+									{% if itm.progress_value != 0 %}
+									<div class="progress">
+									<div class="progress-bar" role="progressbar" style="width: {{ itm.progress_value }}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{ itm.progress_value}}%
+									</div>
+									</div>
+									{% else %}
+									<div class="progress">
+
+										<div class="progress-bar" role="progressbar" style="color: black; width: 100%; background: white;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="0">В проекте нету выполненых задач</div>
+									</div>
+									{% endif %}
+									<a href="project/{{ itm.id }}" class="btn btn-primary">Открыть</a>
+								</div>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
 				<div class="col-md-3">
-				<div class="card">
-						<div class="card-header">
-							<h2 class="card-title">{{ itm.name }}</h2>
-
-								<a href="/{{ itm.id }}/pdf" target="_blank"><i class="fas fa-file-pdf"></i></a>
-						</div>
-						<div class="card-body">
-					<p class="card-text">{{ itm.short_description }}</span>
-					<br>
-					<span class="card-text">Дата окончания проекта: {{ itm.finish_task}}</span>
-					<br>
-					<a href="project/{{ itm.id }}" class="btn btn-primary" >
-						Открыть
+					{% if perms.projectpage.can_add_species_project %}
+					<a type="button" href="project/createproject" class="btn btn-block disabled btn-primary">
+						Создать проект
 					</a>
+					{% endif %}
+					<div class="row">
+						<div class="col-md-12">
+							<br>
+							<h4>
+								Отчеты по исполнителям:
+							</h4>
+							<ul>
+								{% for itm in user_all %}
+									<li><a href="{{ itm.id }}/pdf_user" target="_blank">{{ itm.first_name }} {{ itm.last_name }}</a></li>
+								{% endfor %}
+							</ul>
 						</div>
-					{% if itm.progress_value != 0 %}
-					<div class="progress">
-  							<div class="progress-bar" role="progressbar" style="width: {{ itm.progress_value }}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">{{ itm.progress_value}}%</div>
 					</div>
-						{% else %}
-					<div class="progress">
-							<div class="progress-bar" role="progressbar" style="color: black; width: 100%; background: white;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="0">В проекте нету выполненых задач</div>
-					</div>
-						{% endif%}
-
-
-
-					</div>
-					</div>
-					{% endfor %}
-				
+				</div>
 			</div>
-		
+		</div>
 	</div>
+</div>
+
+
+
 {% endblock %}

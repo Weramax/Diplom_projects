@@ -1,7 +1,7 @@
 import sys
 import datetime
-from django.shortcuts import render, redirect
-from .models import Project, Species_project, Species_Task, UserProject, Documents
+from django.shortcuts import render, redirect, get_object_or_404, render_to_response
+from .models import Project, Species_project, Species_Task, UserProject, Documents, Comment
 
 from django.conf import settings
 
@@ -12,13 +12,18 @@ from django.http import HttpResponse
 from django.views.generic import View
 
 
+
 from reportlab.pdfgen import canvas
 from reportlab.pdfbase import ttfonts, pdfmetrics
 
 from django.views.generic.edit import FormView
-from .forms import UploadFileForm
+from .forms import UploadFileForm, CommentForm
 
-
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods
+from django.contrib import auth
+from django.core.exceptions import ObjectDoesNotExist
+from django.template.context_processors import csrf
 
 
 
@@ -46,39 +51,116 @@ def generate_pdf(request, pk):
 	
 	def draw_header(name_project):
 		p.setFont('Arial', 18)
-		p.drawString(0, 780, name_project.name)
+		p.drawString(60, 780, name_project.name)
 		p.setFont('Arial', 14)
-		p.drawString(30, 730, "Название")
-		
+		p.line(350,778,580,778)
+		p.setFont('Arial', 12)
+		p.drawString(350, 780, 'Дата завершения проекта:')
+		date = datetime.datetime.strftime(name_project.finish_task, '%Y-%m-%d')
+		p.setFont('Arial', 14)
+		p.drawString(505, 780, date)
+		p.drawString(390, 750, 'Подпись')
+		p.line(450, 750, 580, 750)
+		p.drawString(30, 715, 'Описание проекта:')
+		p.drawString(30, 699,  name_project.description)
 
 	def draw_body(x, y, item):
 		p.setFont('Arial', 12)
-		p.drawString(x, y, item.name + ":")
-		p.drawString(x+5, y-10, "Описание")
-		p.drawString(x+5, y-20, item.description)
-		p.drawString(x+5, y-40, "Исполнитель(и)")
+		p.drawString(x, y, "Задача" + "  "+item.name + ":")
+		p.drawString(x+5, y-20, "Описание")
+		p.drawString(x+5, y-35, item.description)
+		p.drawString(x+5, y-55, "Исполнитель(и)")
+		z = x
+
 		for itm in item.user.all():
-			p.drawString(x+5, y-55, itm.first_name + ' ' + itm.last_name + ";")
-			x += 100
-		
+			p.drawString(z+5, y-65, itm.first_name + ' ' + itm.last_name + ";")
+			z += 100
+		p.drawString(x + 5, y - 85, 'Прогресс задачи:')
+		for items in item.complete_value:
+			if items != " ":
+				p.drawString(x + 130, y - 85, 'Выполнено')
+			else:
+				p.drawString(x +130, y -85, 'Не выполнено')
+		p.line(x, y, x+250, y)
 
 	
 	draw_header(species_projects)
 	x = 30
-	y = 700
+	y = 650
 	if len(project) > 0:
 		for item in project:
-			if y > 30:	
+			if y > 50:
 				draw_body(x, y, item)
-				y -=100
+				y -=120
 			else:
 				p.showPage()
 				y = 700
 				draw_header(species_projects)
 				draw_body(x, y, item)
-				y -=100
+				y -=120
 
 
+
+		p.showPage()
+		p.save()
+		context = {'response': response}
+		return response
+	else:
+		return HttpResponse(request.META.get('HTTP_REFERER'))
+
+def generate_pdf_users(request, pk):
+	project = Project.objects.filter(user=pk)
+	user = User.objects.filter(id = pk)
+
+	response = HttpResponse(content_type='application/pdf')
+
+	# response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
+
+
+	MyFontObject = ttfonts.TTFont('Arial', sys.path[0] + '/websystem/static/fonts/9041.ttf')
+	pdfmetrics.registerFont(MyFontObject)
+	p = canvas.Canvas(response)
+	p.setLineWidth(.3)
+	p.setFont('Arial', 12)
+
+	def draw_header(user):
+		p.setFont('Arial', 18)
+		for itm in user.all():
+			p.drawString(60, 780, itm.first_name + "  "+ itm.last_name)
+
+	def draw_body(x, y, item):
+		p.setFont('Arial', 12)
+		p.drawString(x, y, "Задача" + "  "+item.name + ":" + " В проекте" + str(item.species))
+		p.drawString(x+5, y-20, "Описание")
+		p.drawString(x+5, y-35, item.description)
+		p.drawString(x+5, y-55, "Исполнитель(и)")
+		z = x
+
+		for itm in item.user.all():
+			p.drawString(z+5, y-65, itm.first_name + ' ' + itm.last_name + ";")
+			z += 100
+		p.drawString(x + 5, y - 85, 'Прогресс задачи:')
+		for items in item.complete_value:
+			if items != " ":
+				p.drawString(x + 130, y - 85, 'Выполнено')
+			else:
+				p.drawString(x +130, y -85, 'Не выполнено')
+		p.line(x, y, x+250, y)
+
+	draw_header(user)
+	x = 30
+	y = 700
+	if len(project) > 0:
+		for item in project:
+			if y > 50:
+				draw_body(x, y, item)
+				y -= 120
+			else:
+				p.showPage()
+				y = 700
+				draw_header(user)
+				draw_body(x, y, item)
+				y -= 120
 
 		p.showPage()
 		p.save()
@@ -93,6 +175,7 @@ def main(request):
 		return redirect('auth/login')
 	else:
 		species_projects = Species_project.objects.all()
+		user_all = User.objects.all()
 		for project_id in species_projects:
 			project = Project.objects.filter(species = project_id)
 			print (len(project))
@@ -102,14 +185,16 @@ def main(request):
 				project_id.progress_value = progress_bar
 				project_id.save()
 
-		return render(request, 'projects/index.html', {'species_projects': species_projects , 'mainuser': request.user})
+		return render(request, 'projects/index.html', {'species_projects': species_projects , 'mainuser': request.user, 'user_all':user_all})
 
 def details(request, pk):
 	if not request.user.is_authenticated:
 		return redirect('auth/login')
 	else:
-		project = Project.objects.filter(species_id=pk)	
+		sort = request.GET.getlist('sort')
+		project = Project.objects.filter(species_id=pk).order_by(*sort)
 		species_projects = Species_project.objects.get(id=pk)
+
 		documents = Documents.objects.filter(species_id = pk)
 		if request.method == 'POST':
 			form = UploadFileForm(request.POST, request.FILES)
@@ -134,9 +219,16 @@ def details_task_project(request, pk):
 	if not request.user.is_authenticated:
 		return redirect('auth/login')
 	else:
-		date_now1 = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d')
+
 		project = Project.objects.filter(id = pk)
-		date = project[0].finish_task
+		comments = Comment.objects.filter(project_id = pk)
+		if request.method == "POST":
+			text = request.POST.get('comment_text')
+			comments = Comment.objects.get_or_create(project_id_id = pk, author_id = request.user, content = text)
+			return redirect('/project/task-details/'+pk)
+
+
+
 
 		for itm in project:
 			print (itm.species_task)
@@ -147,7 +239,7 @@ def details_task_project(request, pk):
 					itm.complete_value = 0
 					itm.save()
 
-		return render(request, 'projects/task_details_project.html', {'project':project})
+		return render(request, 'projects/task_details_project.html', {'project':project, 'comments':comments})
 
 def create_project(request):
 	if not request.user.is_authenticated:
@@ -242,7 +334,9 @@ def complete_task(request, pk):
 		return redirect('auth/login')
 	else:
 		project = Project.objects.filter(id = pk)
+
 		for itm in project:
 			itm.complete_value = 1
 			itm.save()
-		return redirect('/')
+		speci = str(itm.species_id)
+		return redirect('/project/'+speci)
