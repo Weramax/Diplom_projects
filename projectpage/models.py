@@ -29,7 +29,7 @@ class Documents(models.Model):
 
 class Project(models.Model):
 	name = models.CharField(max_length = 250)
-	complete_value = models.CharField(max_length=1)
+	complete_value = models.CharField(max_length=1, default="0")
 	species = models.ForeignKey('Species_project', on_delete = models.CASCADE)
 	species_task = models.ForeignKey('Species_Task', on_delete = models.CASCADE)
 	created_task = models.DateField(verbose_name='Дата создания',auto_now_add=True)

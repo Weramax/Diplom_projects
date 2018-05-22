@@ -51,18 +51,22 @@ def generate_pdf(request, pk):
 	
 	def draw_header(name_project):
 		p.setFont('Arial', 18)
-		p.drawString(60, 780, name_project.name)
+		p.drawString(60, 800, name_project.name)
 		p.setFont('Arial', 14)
 		p.line(350,778,580,778)
 		p.setFont('Arial', 12)
-		p.drawString(350, 765, 'Проект завершен на '+ str(name_project.progress_value) + '%')
-		p.line(350,763,500,763)
-		p.drawString(350, 780, 'Дата завершения проекта:')
-		date = datetime.datetime.strftime(name_project.finish_task, '%Y-%m-%d')
-		p.setFont('Arial', 14)
-		p.drawString(505, 780, date)
-		p.drawString(390, 740, 'Подпись')
-		p.line(450, 740, 580, 740)
+		p.drawString(350, 740, 'Проект завершен на '+ str(name_project.progress_value) + '%')
+		p.line(350,740,500,740)
+		date_start = datetime.datetime.strftime(name_project.created_task, '%Y-%m-%d')
+		date_finish = datetime.datetime.strftime(name_project.finish_task, '%Y-%m-%d')
+		p.drawString(350,780, 'Дата начала проекта')
+		p.drawString(350, 765, 'Дата завершения проекта:')
+		p.line(350,763,580,763)
+		p.setFont('Arial', 14)	
+		p.drawString(505, 780, date_start)
+		p.drawString(505, 765, date_finish)
+		p.drawString(390, 720, 'Подпись')
+		p.line(450, 720, 580, 720)
 		p.drawString(30, 715, 'Описание проекта:')
 		p.drawString(30, 699,  name_project.description)
 
@@ -79,10 +83,10 @@ def generate_pdf(request, pk):
 			z += 100
 		p.drawString(x + 5, y - 85, 'Прогресс задачи:')
 		for items in item.complete_value:
-			if items != " ":
+			if items != "0":
 				p.drawString(x + 130, y - 85, 'Выполнено')
 			else:
-				p.drawString(x +130, y -85, 'Не выполнено')
+				p.drawString(x + 130, y - 85, 'Не Выполнено')
 		p.line(x, y, x+250, y)
 
 	
@@ -143,10 +147,10 @@ def generate_pdf_users(request, pk):
 			z += 100
 		p.drawString(x + 5, y - 85, 'Прогресс задачи:')
 		for items in item.complete_value:
-			if items != " ":
+			if items != "0":
 				p.drawString(x + 130, y - 85, 'Выполнено')
 			else:
-				p.drawString(x +130, y -85, 'Не выполнено')
+				p.drawString(x + 130, y -85, 'Не выполнено')
 		p.line(x, y, x+250, y)
 
 	draw_header(user)
@@ -180,7 +184,7 @@ def main(request):
 		user_all = User.objects.all()
 		for project_id in species_projects:
 			project = Project.objects.filter(species = project_id)
-			print (len(project))
+			
 			if len(project) > 0:
 				len_complete = (itm for itm in project if itm.complete_value == "1")
 				progress_bar = (((len(list(len_complete))) * 100 ) // len(project))
@@ -233,9 +237,9 @@ def details_task_project(request, pk):
 
 
 		for itm in project:
-			print (itm.species_task)
+			
 			if (datetime.date.today() - itm.finish_task).days >=  0 and itm.complete_value == '1':
-				if itm.species_task_id == 2:
+				if itm.species_task_id == 3:
 					date_now =  datetime.datetime.strftime(datetime.datetime.now() + datetime.timedelta(days = 7), '%Y-%m-%d')
 					itm.finish_task = date_now
 					itm.complete_value = 0
@@ -308,7 +312,7 @@ def update_project_task(request, pk):
 				items.species_task_id = species_task
 				items.finish_task = date_finish
 				items.description = description
-				items.complete_value = " "
+				items.complete_value = "0"
 				items.save()
 
 			user_delete = UserProject.objects.filter(project = pk)
